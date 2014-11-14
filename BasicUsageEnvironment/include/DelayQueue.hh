@@ -20,6 +20,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _DELAY_QUEUE_HH
 #define _DELAY_QUEUE_HH
 
+#include "Platform.h"
+
 #ifndef _NET_COMMON_H
 #include "NetCommon.h"
 #endif
@@ -32,7 +34,7 @@ typedef long time_base_seconds;
 
 ///// A "Timeval" can be either an absolute time, or a time interval /////
 
-class Timeval {
+class LIVE555_API Timeval {
 public:
   time_base_seconds seconds() const {
     return fTv.tv_sec;
@@ -101,7 +103,7 @@ class DelayInterval operator-(Timeval const& arg1, Timeval const& arg2);
 
 ///// DelayInterval /////
 
-class DelayInterval: public Timeval {
+class LIVE555_API DelayInterval : public Timeval {
 public:
   DelayInterval(time_base_seconds seconds, time_base_seconds useconds)
     : Timeval(seconds, useconds) {}
@@ -109,15 +111,15 @@ public:
 
 DelayInterval operator*(short arg1, DelayInterval const& arg2);
 
-extern DelayInterval const DELAY_ZERO;
-extern DelayInterval const DELAY_SECOND;
-extern DelayInterval const DELAY_MINUTE;
-extern DelayInterval const DELAY_HOUR;
-extern DelayInterval const DELAY_DAY;
+LIVE555_API extern DelayInterval const DELAY_ZERO;
+LIVE555_API extern DelayInterval const DELAY_SECOND;
+LIVE555_API extern DelayInterval const DELAY_MINUTE;
+LIVE555_API extern DelayInterval const DELAY_HOUR;
+LIVE555_API extern DelayInterval const DELAY_DAY;
 
 ///// EventTime /////
 
-class EventTime: public Timeval {
+class LIVE555_API EventTime : public Timeval {
 public:
   EventTime(unsigned secondsSinceEpoch = 0,
 	    unsigned usecondsSinceEpoch = 0)
@@ -127,12 +129,12 @@ public:
 
 EventTime TimeNow();
 
-extern EventTime const THE_END_OF_TIME;
+LIVE555_API extern EventTime const THE_END_OF_TIME;
 
 
 ///// DelayQueueEntry /////
 
-class DelayQueueEntry {
+class LIVE555_API DelayQueueEntry {
 public:
   virtual ~DelayQueueEntry();
 
@@ -157,7 +159,7 @@ private:
 
 ///// DelayQueue /////
 
-class DelayQueue: public DelayQueueEntry {
+class LIVE555_API DelayQueue : public DelayQueueEntry {
 public:
   DelayQueue();
   virtual ~DelayQueue();

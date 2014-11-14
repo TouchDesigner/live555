@@ -21,11 +21,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MP3_ADU_HH
 #define _MP3_ADU_HH
 
+#include "Platform.h"
+
 #ifndef _FRAMED_FILTER_HH
 #include "FramedFilter.hh"
 #endif
 
-class ADUFromMP3Source: public FramedFilter {
+class LIVE555_API ADUFromMP3Source: public FramedFilter {
 public:
   static ADUFromMP3Source* createNew(UsageEnvironment& env,
 				     FramedSource* inputSource,
@@ -63,7 +65,7 @@ private:
   unsigned fFrameCounter;
 };
 
-class MP3FromADUSource: public FramedFilter {
+class LIVE555_API MP3FromADUSource: public FramedFilter {
 public:
   static MP3FromADUSource* createNew(UsageEnvironment& env,
 				     FramedSource* inputSource,
@@ -92,6 +94,6 @@ private:
 };
 
 // Definitions of external C functions that implement various MP3 operations:
-extern "C" int mp3ZeroOutSideInfo(unsigned char*, unsigned, unsigned);
+extern "C" LIVE555_API int mp3ZeroOutSideInfo(unsigned char*, unsigned, unsigned);
 
 #endif

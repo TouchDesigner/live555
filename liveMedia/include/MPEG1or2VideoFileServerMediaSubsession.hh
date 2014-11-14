@@ -22,11 +22,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MPEG_1OR2_VIDEO_FILE_SERVER_MEDIA_SUBSESSION_HH
 #define _MPEG_1OR2_VIDEO_FILE_SERVER_MEDIA_SUBSESSION_HH
 
+#include "Platform.h"
+
 #ifndef _FILE_SERVER_MEDIA_SUBSESSION_HH
 #include "FileServerMediaSubsession.hh"
 #endif
 
-class MPEG1or2VideoFileServerMediaSubsession: public FileServerMediaSubsession{
+class LIVE555_API MPEG1or2VideoFileServerMediaSubsession: public FileServerMediaSubsession{
 public:
   static MPEG1or2VideoFileServerMediaSubsession*
   createNew(UsageEnvironment& env, char const* fileName, Boolean reuseFirstSource,

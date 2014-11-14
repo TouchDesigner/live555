@@ -22,11 +22,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _WAV_AUDIO_FILE_SERVER_MEDIA_SUBSESSION_HH
 #define _WAV_AUDIO_FILE_SERVER_MEDIA_SUBSESSION_HH
 
+#include "Platform.h"
+
 #ifndef _FILE_SERVER_MEDIA_SUBSESSION_HH
 #include "FileServerMediaSubsession.hh"
 #endif
 
-class WAVAudioFileServerMediaSubsession: public FileServerMediaSubsession{
+class LIVE555_API WAVAudioFileServerMediaSubsession: public FileServerMediaSubsession{
 public:
   static WAVAudioFileServerMediaSubsession*
   createNew(UsageEnvironment& env, char const* fileName, Boolean reuseFirstSource,

@@ -22,11 +22,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _DV_VIDEO_FILE_SERVER_MEDIA_SUBSESSION_HH
 #define _DV_VIDEO_FILE_SERVER_MEDIA_SUBSESSION_HH
 
+#include "Platform.h"
+
 #ifndef _FILE_SERVER_MEDIA_SUBSESSION_HH
 #include "FileServerMediaSubsession.hh"
 #endif
 
-class DVVideoFileServerMediaSubsession: public FileServerMediaSubsession{
+class LIVE555_API DVVideoFileServerMediaSubsession: public FileServerMediaSubsession{
 public:
   static DVVideoFileServerMediaSubsession*
   createNew(UsageEnvironment& env, char const* fileName, Boolean reuseFirstSource);

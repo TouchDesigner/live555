@@ -21,6 +21,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _FRAMED_SOURCE_HH
 #define _FRAMED_SOURCE_HH
 
+#include "Platform.h"
+
 #ifndef _NET_COMMON_H
 #include "NetCommon.h"
 #endif
@@ -28,7 +30,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MediaSource.hh"
 #endif
 
-class FramedSource: public MediaSource {
+class LIVE555_API FramedSource: public MediaSource {
 public:
   static Boolean lookupByName(UsageEnvironment& env, char const* sourceName,
 			      FramedSource*& resultSource);

@@ -21,6 +21,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _RTSP_SERVER_HH
 #define _RTSP_SERVER_HH
 
+#include "Platform.h"
+
 #ifndef _SERVER_MEDIA_SESSION_HH
 #include "ServerMediaSession.hh"
 #endif
@@ -33,7 +35,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 // A data structure used for optional user/password authentication:
 
-class UserAuthenticationDatabase {
+class LIVE555_API UserAuthenticationDatabase {
 public:
   UserAuthenticationDatabase(char const* realm = NULL,
 			     Boolean passwordsAreMD5 = False);
@@ -61,7 +63,7 @@ protected:
 #define RTSP_BUFFER_SIZE 20000 // for incoming requests, and outgoing responses
 #endif
 
-class RTSPServer: public Medium {
+class LIVE555_API RTSPServer: public Medium {
 public:
   static RTSPServer* createNew(UsageEnvironment& env, Port ourPort = 554,
 			       UserAuthenticationDatabase* authDatabase = NULL,
@@ -267,7 +269,7 @@ public: // should be protected, but some old compilers complain otherwise
   };
 
   // The state of an individual client session (using one or more sequential TCP connections) handled by a RTSP server:
-  class RTSPClientSession {
+  class LIVE555_API RTSPClientSession {
   protected:
     RTSPClientSession(RTSPServer& ourServer, u_int32_t sessionId);
     virtual ~RTSPClientSession();
@@ -376,7 +378,7 @@ private:
 
 ////////// A subclass of "RTSPServer" that implements the "REGISTER" command to set up proxying on the specified URL //////////
 
-class RTSPServerWithREGISTERProxying: public RTSPServer {
+class LIVE555_API RTSPServerWithREGISTERProxying: public RTSPServer {
 public:
   static RTSPServerWithREGISTERProxying* createNew(UsageEnvironment& env, Port ourPort = 554,
 						   UserAuthenticationDatabase* authDatabase = NULL,

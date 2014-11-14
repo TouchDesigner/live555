@@ -21,6 +21,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _GROUPSOCK_HH
 #define _GROUPSOCK_HH
 
+#include "Platform.h"
+
 #ifndef _GROUPSOCK_VERSION_HH
 #include "groupsock_version.hh"
 #endif
@@ -36,7 +38,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // An "OutputSocket" is (by default) used only to send packets.
 // No packets are received on it (unless a subclass arranges this)
 
-class OutputSocket: public Socket {
+class LIVE555_API OutputSocket: public Socket {
 public:
   OutputSocket(UsageEnvironment& env);
   virtual ~OutputSocket();
@@ -59,7 +61,7 @@ private:
   unsigned fLastSentTTL;
 };
 
-class destRecord {
+class LIVE555_API destRecord {
 public:
   destRecord(struct in_addr const& addr, Port const& port, u_int8_t ttl,
 	     destRecord* next);
@@ -75,7 +77,7 @@ public:
 // As the name suggests, it was originally designed to send/receive
 // multicast, but it can send/receive unicast as well.
 
-class Groupsock: public OutputSocket {
+class LIVE555_API Groupsock: public OutputSocket {
 public:
   Groupsock(UsageEnvironment& env, struct in_addr const& groupAddr,
 	    Port port, u_int8_t ttl);
@@ -159,7 +161,7 @@ UsageEnvironment& operator<<(UsageEnvironment& s, const Groupsock& g);
 
 // A data structure for looking up a 'groupsock'
 // by (multicast address, port), or by socket number
-class GroupsockLookupTable {
+class LIVE555_API GroupsockLookupTable {
 public:
   Groupsock* Fetch(UsageEnvironment& env, netAddressBits groupAddress,
 		   Port port, u_int8_t ttl, Boolean& isNew);

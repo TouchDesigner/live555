@@ -1,0 +1,12 @@
+# Visual Studio Files #
+#######################
+*.sdf
+*.vcxproj.user
+*.suo
+ipch
+
+# Specific Build Results #
+##########################
+projects/Debug
+projects/Release
+projects/x64

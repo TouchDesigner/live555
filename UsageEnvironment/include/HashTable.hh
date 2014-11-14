@@ -20,11 +20,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _HASH_TABLE_HH
 #define _HASH_TABLE_HH
 
+#include "Platform.h"
+
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
 #endif
 
-class HashTable {
+class LIVE555_API HashTable {
 public:
   virtual ~HashTable();
   

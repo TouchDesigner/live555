@@ -21,11 +21,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MEDIA_SINK_HH
 #define _MEDIA_SINK_HH
 
+#include "Platform.h"
+
 #ifndef _FRAMED_SOURCE_HH
 #include "FramedSource.hh"
 #endif
 
-class MediaSink: public Medium {
+class LIVE555_API MediaSink: public Medium {
 public:
   static Boolean lookupByName(UsageEnvironment& env, char const* sinkName,
 			      MediaSink*& resultSink);
@@ -68,7 +70,7 @@ private:
 };
 
 // A data structure that a sink may use for an output packet:
-class OutPacketBuffer {
+class LIVE555_API OutPacketBuffer {
 public:
   OutPacketBuffer(unsigned preferredPacketSize, unsigned maxPacketSize,
 		  unsigned maxBufferSize = 0);

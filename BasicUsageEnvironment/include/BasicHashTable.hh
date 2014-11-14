@@ -20,6 +20,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _BASIC_HASH_TABLE_HH
 #define _BASIC_HASH_TABLE_HH
 
+#include "Platform.h"
+
 #ifndef _HASH_TABLE_HH
 #include "HashTable.hh"
 #endif
@@ -32,7 +34,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define SMALL_HASH_TABLE_SIZE 4
 
-class BasicHashTable: public HashTable {
+class LIVE555_API BasicHashTable : public HashTable {
 private:
 	class TableEntry; // forward
 
