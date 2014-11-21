@@ -24,11 +24,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _H264_VIDEO_STREAM_DISCRETE_FRAMER_HH
 #define _H264_VIDEO_STREAM_DISCRETE_FRAMER_HH
 
+#include "Platform.h"
+
 #ifndef _H264_OR_5_VIDEO_STREAM_DISCRETE_FRAMER_HH
 #include "H264or5VideoStreamDiscreteFramer.hh"
 #endif
 
-class H264VideoStreamDiscreteFramer: public H264or5VideoStreamDiscreteFramer {
+class LIVE555_API H264VideoStreamDiscreteFramer: public H264or5VideoStreamDiscreteFramer {
 public:
   static H264VideoStreamDiscreteFramer*
   createNew(UsageEnvironment& env, FramedSource* inputSource);

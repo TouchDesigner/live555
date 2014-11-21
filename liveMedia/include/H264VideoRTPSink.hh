@@ -21,11 +21,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _H264_VIDEO_RTP_SINK_HH
 #define _H264_VIDEO_RTP_SINK_HH
 
+#include "Platform.h"
+
 #ifndef _H264_OR_5_VIDEO_RTP_SINK_HH
 #include "H264or5VideoRTPSink.hh"
 #endif
 
-class H264VideoRTPSink: public H264or5VideoRTPSink {
+class LIVE555_API H264VideoRTPSink: public H264or5VideoRTPSink {
 public:
   static H264VideoRTPSink*
   createNew(UsageEnvironment& env, Groupsock* RTPgs, unsigned char rtpPayloadFormat);
