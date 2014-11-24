@@ -21,11 +21,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _H264_VIDEO_STREAM_FRAMER_HH
 #define _H264_VIDEO_STREAM_FRAMER_HH
 
+#include "Platform.h"
+
 #ifndef _H264_OR_5_VIDEO_STREAM_FRAMER_HH
 #include "H264or5VideoStreamFramer.hh"
 #endif
 
-class H264VideoStreamFramer: public H264or5VideoStreamFramer {
+class LIVE555_API H264VideoStreamFramer: public H264or5VideoStreamFramer {
 public:
   static H264VideoStreamFramer* createNew(UsageEnvironment& env, FramedSource* inputSource,
 					  Boolean includeStartCodeInOutput = False);
