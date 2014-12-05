@@ -21,6 +21,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MP3_INTERNALS_HH
 #define _MP3_INTERNALS_HH
 
+#include "Platform.h"
+
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
 #endif
@@ -63,7 +65,7 @@ typedef struct MP3SideInfo {
 #define SBLIMIT 32
 #define MAX_MP3_FRAME_SIZE 2500 /* also big enough for an 'ADU'ized frame */
 
-class MP3FrameParams {
+class LIVE555_API MP3FrameParams {
 public:
   MP3FrameParams();
   ~MP3FrameParams();

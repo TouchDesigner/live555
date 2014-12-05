@@ -21,11 +21,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _BIT_VECTOR_HH
 #define _BIT_VECTOR_HH
 
+#include "Platform.h"
+
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
 #endif
 
-class BitVector {
+class LIVE555_API BitVector {
 public:
   BitVector(unsigned char* baseBytePtr,
 	    unsigned baseBitOffset,
