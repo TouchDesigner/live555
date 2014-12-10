@@ -1734,7 +1734,9 @@
 					"SOCKLEN_T=socklen_t",
 					"TIME_BASE=int",
 					"HAVE_SOCKADDR_LEN=1",
+					LIVE555_EXPORTS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1750,7 +1752,9 @@
 					"SOCKLEN_T=socklen_t",
 					"TIME_BASE=int",
 					"HAVE_SOCKADDR_LEN=1",
+					LIVE555_EXPORTS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
