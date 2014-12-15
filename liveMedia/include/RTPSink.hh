@@ -139,7 +139,7 @@ class LIVE555_API RTPTransmissionStatsDB {
 public:
   unsigned numReceivers() const { return fNumReceivers; }
 
-  class Iterator {
+  class LIVE555_API Iterator {
   public:
     Iterator(RTPTransmissionStatsDB& receptionStatsDB);
     virtual ~Iterator();
