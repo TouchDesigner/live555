@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2014 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
 // A generic RTSP client
 // Implementation
 
@@ -1541,8 +1541,12 @@ void RTSPClient::handleResponseBytes(int newBytesRead) {
       strncpy(headerDataCopy, fResponseBuffer, fResponseBytesAlreadySeen);
       headerDataCopy[fResponseBytesAlreadySeen] = '\0';
       
-      char* lineStart = headerDataCopy;
-      char* nextLineStart = getLine(lineStart);
+      char* lineStart;
+      char* nextLineStart = headerDataCopy;
+      do {
+	lineStart = nextLineStart;
+	nextLineStart = getLine(lineStart);
+      } while (lineStart[0] == '\0'); // skip over any blank lines at the start
       if (!parseResponseCode(lineStart, responseCode, responseStr)) {
 	// This does not appear to be a RTSP response; perhaps it's a RTSP request instead?
 	handleIncomingRequest();
