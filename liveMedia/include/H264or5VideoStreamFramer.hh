@@ -60,8 +60,9 @@ protected:
   void saveCopyOfVPS(u_int8_t* from, unsigned size);
   void saveCopyOfSPS(u_int8_t* from, unsigned size);
   void saveCopyOfPPS(u_int8_t* from, unsigned size);
-
-  void setPresentationTime() { fPresentationTime = fNextPresentationTime; }
+  
+  // Made virtual by Tom Butterworth to permit variable-rate frames in subclass
+  virtual void setPresentationTime() { fPresentationTime = fNextPresentationTime; }
 
   Boolean isVPS(u_int8_t nal_unit_type);
   Boolean isSPS(u_int8_t nal_unit_type);
