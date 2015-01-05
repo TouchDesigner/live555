@@ -7,6 +7,5 @@ ipch
 
 # Specific Build Results #
 ##########################
-projects/Debug
-projects/Release
+projects/Win32
 projects/x64
