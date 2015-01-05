@@ -137,6 +137,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
         while (k2 <= k) resultURLSuffix[n++] = reqStr[k2++];
       }
       resultURLSuffix[n] = '\0';
+      decodeURL(resultURLSuffix);
 
       // The URL 'pre-suffix' comes from [i+1,k1-1]
       // Copy "resultURLPreSuffix":
