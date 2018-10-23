@@ -140,7 +140,7 @@ private:
 };
 
 
-Boolean LIVE555_API IsMulticastAddress(netAddressBits address);
+LIVE555_API Boolean IsMulticastAddress(netAddressBits address);
 
 
 // A mechanism for displaying an IPv4 address in ASCII.  This is intended to replace "inet_ntoa()", which is not thread-safe.
