@@ -578,7 +578,7 @@ static void lookForHeader(char const* headerName, char const* source, unsigned s
 	  char const* resultSourceEnd = &source[j];
 	  while (resultSource < resultSourceEnd) *resultStr++ = *resultSource++;
 	  *resultStr = '\0';
-	  break;
+	  return;
 	}
       }
     }
