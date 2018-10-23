@@ -23,6 +23,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #ifndef _GENERIC_MEDIA_SERVER_HH
 #include "GenericMediaServer.hh"
+#endif
 #include "Platform.h"
 
 #ifndef _SERVER_MEDIA_SESSION_HH
