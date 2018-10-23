@@ -1,7 +1,7 @@
 /**********
 This library is free software; you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
+Free Software Foundation; either version 3 of the License, or (at your
 option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
 
 This library is distributed in the hope that it will be useful, but WITHOUT
@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2014 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // RTP source for a common kind of payload format: Those that pack multiple,
 // complete codec frames (as many as possible) into each RTP packet.
 // Implementation
@@ -105,6 +105,10 @@ Boolean MultiFramedRTPSource
 }
 
 void MultiFramedRTPSource::doStopGettingFrames() {
+  if (fPacketReadInProgress != NULL) {
+    fReorderingBuffer->freePacket(fPacketReadInProgress);
+    fPacketReadInProgress = NULL;
+  }
   envir().taskScheduler().unscheduleDelayedTask(nextTask());
   fRTPInterface.stopNetworkReading();
   fReorderingBuffer->reset();
@@ -145,7 +149,7 @@ void MultiFramedRTPSource::doGetNextFrame1() {
 	// Something's wrong with the header; reject the packet:
 	fReorderingBuffer->releaseUsedPacket(nextPacket);
 	fNeedDelivery = True;
-	break;
+	continue;
       }
       nextPacket->skip(specialHeaderSize);
     }
@@ -168,7 +172,7 @@ void MultiFramedRTPSource::doGetNextFrame1() {
       // This packet is unusable; reject it:
       fReorderingBuffer->releaseUsedPacket(nextPacket);
       fNeedDelivery = True;
-      break;
+      continue;
     }
 
     // The packet is usable. Deliver all or part of it to our caller:
@@ -184,7 +188,7 @@ void MultiFramedRTPSource::doGetNextFrame1() {
       fReorderingBuffer->releaseUsedPacket(nextPacket);
     }
 
-    if (fCurrentPacketCompletesFrame) {
+    if (fCurrentPacketCompletesFrame && fFrameSize > 0) {
       // We have all the data that the client wants.
       if (fNumTruncatedBytes > 0) {
 	envir() << "MultiFramedRTPSource::doGetNextFrame1(): The total received frame size exceeds the client's buffer size ("
@@ -235,8 +239,8 @@ void MultiFramedRTPSource::networkReadHandler1() {
     struct sockaddr_in fromAddress;
     Boolean packetReadWasIncomplete = fPacketReadInProgress != NULL;
     if (!bPacket->fillInData(fRTPInterface, fromAddress, packetReadWasIncomplete)) {
-      if (bPacket->bytesAvailable() == 0) {
-	envir() << "MultiFramedRTPSource error: Hit limit when reading incoming packet over TCP. Increase \"MAX_PACKET_SIZE\"\n";
+      if (bPacket->bytesAvailable() == 0) { // should not happen??
+	envir() << "MultiFramedRTPSource internal error: Hit limit when reading incoming packet over TCP\n";
       }
       fPacketReadInProgress = NULL;
       break;
@@ -338,7 +342,7 @@ void MultiFramedRTPSource::networkReadHandler1() {
 
 ////////// BufferedPacket and BufferedPacketFactory implementation /////
 
-#define MAX_PACKET_SIZE 20000
+#define MAX_PACKET_SIZE 65536
 
 BufferedPacket::BufferedPacket()
   : fPacketSize(MAX_PACKET_SIZE),

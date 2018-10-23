@@ -1,7 +1,7 @@
 /**********
 This library is free software; you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
+Free Software Foundation; either version 3 of the License, or (at your
 option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
 
 This library is distributed in the hope that it will be useful, but WITHOUT
@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2014 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // A class used for digest authentication.
 // Implementation
 
@@ -49,8 +49,10 @@ Authenticator& Authenticator::operator=(const Authenticator& rightSide) {
 }
 
 Boolean Authenticator::operator<(const Authenticator* rightSide) {
+  // Returns True if "rightSide" is 'newer' than us:
   if (rightSide != NULL && rightSide != this &&
       (rightSide->realm() != NULL || rightSide->nonce() != NULL ||
+       username() == NULL || password() == NULL ||
        strcmp(rightSide->username(), username()) != 0 ||
        strcmp(rightSide->password(), password()) != 0)) {
     return True;

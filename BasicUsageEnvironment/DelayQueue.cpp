@@ -1,7 +1,7 @@
 /**********
 This library is free software; you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
+Free Software Foundation; either version 3 of the License, or (at your
 option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
 
 This library is distributed in the hope that it will be useful, but WITHOUT
@@ -13,7 +13,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
-// Copyright (c) 1996-2014, Live Networks, Inc.  All rights reserved
+// Copyright (c) 1996-2018, Live Networks, Inc.  All rights reserved
 //	Help by Carlo Bonamico to get working for Windows
 // Delay queue
 // Implementation
@@ -200,7 +200,7 @@ DelayQueueEntry* DelayQueue::findEntryByToken(intptr_t tokenToFind) {
 
 void DelayQueue::synchronize() {
   // First, figure out how much time has elapsed since the last sync:
-  EventTime timeNow = TimeNow();
+  _EventTime timeNow = TimeNow();
   if (timeNow < fLastSyncTime) {
     // The system clock has apparently gone back in time; reset our sync time and return:
     fLastSyncTime  = timeNow;
@@ -220,14 +220,14 @@ void DelayQueue::synchronize() {
 }
 
 
-///// EventTime /////
+///// _EventTime /////
 
-EventTime TimeNow() {
+_EventTime TimeNow() {
   struct timeval tvNow;
 
   gettimeofday(&tvNow, NULL);
 
-  return EventTime(tvNow.tv_sec, tvNow.tv_usec);
+  return _EventTime(tvNow.tv_sec, tvNow.tv_usec);
 }
 
-const EventTime THE_END_OF_TIME(INT_MAX);
+const _EventTime THE_END_OF_TIME(INT_MAX);

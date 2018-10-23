@@ -1,7 +1,7 @@
 /**********
 This library is free software; you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
+Free Software Foundation; either version 3 of the License, or (at your
 option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
 
 This library is distributed in the hope that it will be useful, but WITHOUT
@@ -14,7 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-// Copyright (c) 1996-2014 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // A simplified version of "H264or5VideoStreamFramer" that takes only complete,
 // discrete frames (rather than an arbitrary byte stream) as input.
 // This avoids the parsing and data copying overhead of the full
@@ -79,11 +79,7 @@ void H264or5VideoStreamDiscreteFramer
     saveCopyOfPPS(fTo, frameSize);
   }
 
-  // Next, check whether this NAL unit ends the current 'access unit' (basically, a video frame).
-  //  Unfortunately, we can't do this reliably, because we don't yet know anything about the
-  // *next* NAL unit that we'll see.  So, we guess this as best as we can, by assuming that
-  // if this NAL unit is a VCL NAL unit, then it ends the current 'access unit'.
-  if (isVCL(nal_unit_type)) fPictureEndMarker = True;
+  fPictureEndMarker = nalUnitEndsAccessUnit(nal_unit_type);
 
   // Finally, complete delivery to the client:
   fFrameSize = frameSize;
@@ -91,4 +87,16 @@ void H264or5VideoStreamDiscreteFramer
   fPresentationTime = presentationTime;
   fDurationInMicroseconds = durationInMicroseconds;
   afterGetting(this);
+}
+
+Boolean H264or5VideoStreamDiscreteFramer::nalUnitEndsAccessUnit(u_int8_t nal_unit_type) {
+  // Check whether this NAL unit ends the current 'access unit' (basically, a video frame).
+  //  Unfortunately, we can't do this reliably, because we don't yet know anything about the
+  // *next* NAL unit that we'll see.  So, we guess this as best as we can, by assuming that
+  // if this NAL unit is a VCL NAL unit, then it ends the current 'access unit'.
+  //
+  // This will be wrong if you are streaming multiple 'slices' per picture.  In that case,
+  // you can define a subclass that reimplements this virtual function to do the right thing.
+
+  return isVCL(nal_unit_type);
 }

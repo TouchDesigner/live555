@@ -1,7 +1,7 @@
 /**********
 This library is free software; you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
+Free Software Foundation; either version 3 of the License, or (at your
 option) any later version. (See <http://www.gnu.org/copyleft/lesser.html>.)
 
 This library is distributed in the hope that it will be useful, but WITHOUT
@@ -14,20 +14,33 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "mTunnel" multicast access service
-// Copyright (c) 1996-2014 Live Networks, Inc.  All rights reserved.
+// Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // Helper routines to implement 'group sockets'
 // Implementation
 
 #include "GroupsockHelper.hh"
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if (defined(__WIN32__) || defined(_WIN32)) && !defined(__MINGW32__)
 #include <time.h>
 extern "C" int initializeWinsockIfNecessary();
 #else
 #include <stdarg.h>
 #include <time.h>
+#include <sys/time.h>
+#if !defined(_WIN32)
+#include <netinet/tcp.h>
+#ifdef __ANDROID_NDK__
+#include <android/ndk-version.h>
+#define ANDROID_OLD_NDK __NDK_MAJOR__ < 17
+#endif
+#endif
 #include <fcntl.h>
 #define initializeWinsockIfNecessary() 1
+#endif
+#if defined(__WIN32__) || defined(_WIN32) || defined(_QNX4)
+#else
+#include <signal.h>
+#define USE_SIGNALS 1
 #endif
 #include <stdio.h>
 
@@ -196,18 +209,53 @@ Boolean makeSocketBlocking(int sock, unsigned writeTimeoutInMilliseconds) {
 
   if (writeTimeoutInMilliseconds > 0) {
 #ifdef SO_SNDTIMEO
+#if defined(__WIN32__) || defined(_WIN32)
+    DWORD msto = (DWORD)writeTimeoutInMilliseconds;
+    setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, (char *)&msto, sizeof(msto) );
+#else
     struct timeval tv;
     tv.tv_sec = writeTimeoutInMilliseconds/1000;
     tv.tv_usec = (writeTimeoutInMilliseconds%1000)*1000;
     setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv, sizeof tv);
+#endif
 #endif
   }
 
   return result;
 }
 
+Boolean setSocketKeepAlive(int sock) {
+#if defined(__WIN32__) || defined(_WIN32)
+  // How do we do this in Windows?  For now, just make this a no-op in Windows:
+#else
+  int const keepalive_enabled = 1;
+  if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, (void*)&keepalive_enabled, sizeof keepalive_enabled) < 0) {
+    return False;
+  }
+
+#ifdef TCP_KEEPIDLE
+  int const keepalive_time = 180;
+  if (setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, (void*)&keepalive_time, sizeof keepalive_time) < 0) {
+    return False;
+  }
+#endif
+
+  int const keepalive_count = 5;
+  if (setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, (void*)&keepalive_count, sizeof keepalive_count) < 0) {
+    return False;
+  }
+
+  int const keepalive_interval = 20;
+  if (setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, (void*)&keepalive_interval, sizeof keepalive_interval) < 0) {
+    return False;
+  }
+#endif
+
+  return True;
+}
+
 int setupStreamSocket(UsageEnvironment& env,
-                      Port port, Boolean makeNonBlocking) {
+                      Port port, Boolean makeNonBlocking, Boolean setKeepAlive) {
   if (!initializeWinsockIfNecessary()) {
     socketErr(env, "Failed to initialize 'winsock': ");
     return -1;
@@ -273,6 +321,16 @@ int setupStreamSocket(UsageEnvironment& env,
     }
   }
 
+  // Set the keep alive mechanism for the TCP socket, to avoid "ghost sockets" 
+  //    that remain after an interrupted communication.
+  if (setKeepAlive) {
+    if (!setSocketKeepAlive(newSocket)) {
+      socketErr(env, "failed to set keep alive: ");
+      closeSocket(newSocket);
+      return -1;
+    }
+  }
+
   return newSocket;
 }
 
@@ -313,7 +371,7 @@ int readSocket(UsageEnvironment& env,
 }
 
 Boolean writeSocket(UsageEnvironment& env,
-		    int socket, struct in_addr address, Port port,
+		    int socket, struct in_addr address, portNumBits portNum,
 		    u_int8_t ttlArg,
 		    unsigned char* buffer, unsigned bufferSize) {
   // Before sending, set the socket's TTL:
@@ -329,14 +387,14 @@ Boolean writeSocket(UsageEnvironment& env,
     return False;
   }
 
-  return writeSocket(env, socket, address, port, buffer, bufferSize);
+  return writeSocket(env, socket, address, portNum, buffer, bufferSize);
 }
 
 Boolean writeSocket(UsageEnvironment& env,
-		    int socket, struct in_addr address, Port port,
+		    int socket, struct in_addr address, portNumBits portNum,
 		    unsigned char* buffer, unsigned bufferSize) {
   do {
-    MAKE_SOCKADDR_IN(dest, address.s_addr, port.num());
+    MAKE_SOCKADDR_IN(dest, address.s_addr, portNum);
     int bytesSent = sendto(socket, (char*)buffer, bufferSize, 0,
 			   (struct sockaddr*)&dest, sizeof dest);
     if (bytesSent != (int)bufferSize) {
@@ -350,6 +408,17 @@ Boolean writeSocket(UsageEnvironment& env,
   } while (0);
 
   return False;
+}
+
+void ignoreSigPipeOnSocket(int socketNum) {
+  #ifdef USE_SIGNALS
+  #ifdef SO_NOSIGPIPE
+  int set_option = 1;
+  setsockopt(socketNum, SOL_SOCKET, SO_NOSIGPIPE, &set_option, sizeof set_option);
+  #else
+  signal(SIGPIPE, SIG_IGN);
+  #endif
+  #endif
 }
 
 static unsigned getBufferSize(UsageEnvironment& env, int bufOptName,
@@ -498,7 +567,7 @@ Boolean socketJoinGroupSSM(UsageEnvironment& env, int socket,
   if (!IsMulticastAddress(groupAddress)) return True; // ignore this case
 
   struct ip_mreq_source imr;
-#ifdef __ANDROID__
+#if ANDROID_OLD_NDK
     imr.imr_multiaddr = groupAddress;
     imr.imr_sourceaddr = sourceFilterAddr;
     imr.imr_interface = ReceivingInterfaceAddr;
@@ -524,7 +593,7 @@ Boolean socketLeaveGroupSSM(UsageEnvironment& /*env*/, int socket,
   if (!IsMulticastAddress(groupAddress)) return True; // ignore this case
 
   struct ip_mreq_source imr;
-#ifdef __ANDROID__
+#if ANDROID_OLD_NDK
     imr.imr_multiaddr = groupAddress;
     imr.imr_sourceaddr = sourceFilterAddr;
     imr.imr_interface = ReceivingInterfaceAddr;
@@ -611,7 +680,7 @@ netAddressBits ourIPAddress(UsageEnvironment& env) {
       unsigned char testString[] = "hostIdTest";
       unsigned testStringLength = sizeof testString;
 
-      if (!writeSocket(env, sock, testAddr, testPort, 0,
+      if (!writeSocket(env, sock, testAddr, testPort.num(), 0,
 		       testString, testStringLength)) break;
 
       // Block until the socket is readable (with a 5-second timeout):
@@ -736,7 +805,7 @@ char const* timestampString() {
   return (char const*)&timeString;
 }
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if (defined(__WIN32__) || defined(_WIN32)) && !defined(__MINGW32__)
 // For Windoze, we need to implement our own gettimeofday()
 
 // used to make sure that static variables in gettimeofday() aren't initialized simultaneously by multiple threads
@@ -820,3 +889,4 @@ int gettimeofday(struct timeval* tp, int* /*tz*/) {
   return 0;
 }
 #endif
+#undef ANDROID_OLD_NDK
