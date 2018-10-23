@@ -35,7 +35,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RTCP.hh"
 #endif
 
-class OnDemandServerMediaSubsession: public ServerMediaSubsession {
+class LIVE555_API OnDemandServerMediaSubsession: public ServerMediaSubsession {
 protected: // we're a virtual base class
   OnDemandServerMediaSubsession(UsageEnvironment& env, Boolean reuseFirstSource,
 				portNumBits initialPortNum = 6970,

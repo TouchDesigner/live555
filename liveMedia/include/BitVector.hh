@@ -24,8 +24,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
 #endif
+#include "Platform.h"
 
-class BitVector {
+class LIVE555_API BitVector {
 public:
   BitVector(unsigned char* baseBytePtr,
 	    unsigned baseBitOffset,

@@ -28,9 +28,10 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "MPEGVideoStreamFramer.hh"
 #endif
 
+#include "Platform.h"
 ////////// MPEGVideoStreamParser definition //////////
 
-class MPEGVideoStreamParser: public StreamParser {
+class LIVE555_API MPEGVideoStreamParser: public StreamParser {
 public:
   MPEGVideoStreamParser(MPEGVideoStreamFramer* usingSource,
 			FramedSource* inputSource);

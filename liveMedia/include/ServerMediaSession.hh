@@ -30,7 +30,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 class ServerMediaSubsession; // forward
 
-class ServerMediaSession: public Medium {
+class LIVE555_API ServerMediaSession: public Medium {
 public:
   static ServerMediaSession* createNew(UsageEnvironment& env,
 				       char const* streamName = NULL,
@@ -117,7 +117,7 @@ private:
 };
 
 
-class ServerMediaSubsession: public Medium {
+class LIVE555_API ServerMediaSubsession: public Medium {
 public:
   unsigned trackNumber() const { return fTrackNumber; }
   char const* trackId();

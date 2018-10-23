@@ -32,6 +32,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "Boolean.hh"
 #endif
 
+#include "Platform.h"
+
 #ifndef _STRDUP_HH
 // "strDup()" is used often, so include this here, so everyone gets it:
 #include "strDup.hh"
@@ -50,7 +52,7 @@ class TaskScheduler; // forward
 
 // An abstract base class, subclassed for each use of the library
 
-class UsageEnvironment {
+class LIVE555_API UsageEnvironment {
 public:
   Boolean reclaim();
       // returns True iff we were actually able to delete our object
@@ -103,7 +105,7 @@ typedef void TaskFunc(void* clientData);
 typedef void* TaskToken;
 typedef u_int32_t EventTriggerId;
 
-class TaskScheduler {
+class LIVE555_API TaskScheduler {
 public:
   virtual ~TaskScheduler();
 

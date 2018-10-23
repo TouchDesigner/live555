@@ -30,7 +30,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 class RTPTransmissionStatsDB; // forward
 
-class RTPSink: public MediaSink {
+class LIVE555_API RTPSink: public MediaSink {
 public:
   static Boolean lookupByName(UsageEnvironment& env, char const* sinkName,
 			      RTPSink*& resultSink);
@@ -134,11 +134,11 @@ private:
 
 class RTPTransmissionStats; // forward
 
-class RTPTransmissionStatsDB {
+class LIVE555_API RTPTransmissionStatsDB {
 public:
   unsigned numReceivers() const { return fNumReceivers; }
 
-  class Iterator {
+  class LIVE555_API Iterator {
   public:
     Iterator(RTPTransmissionStatsDB& receptionStatsDB);
     virtual ~Iterator();
@@ -175,7 +175,7 @@ private:
   HashTable* fTable;
 };
 
-class RTPTransmissionStats {
+class LIVE555_API RTPTransmissionStats {
 public:
   u_int32_t SSRC() const {return fSSRC;}
   struct sockaddr_in const& lastFromAddress() const {return fLastFromAddress;}

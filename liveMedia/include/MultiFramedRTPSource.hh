@@ -29,7 +29,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 class BufferedPacket; // forward
 class BufferedPacketFactory; // forward
 
-class MultiFramedRTPSource: public RTPSource {
+class LIVE555_API MultiFramedRTPSource: public RTPSource {
 protected:
   MultiFramedRTPSource(UsageEnvironment& env, Groupsock* RTPgs,
 		       unsigned char rtpPayloadFormat,

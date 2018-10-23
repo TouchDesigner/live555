@@ -28,7 +28,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "RTPSource.hh"
 #endif
 
-class SDESItem {
+class LIVE555_API SDESItem {
 public:
   SDESItem(unsigned char tag, unsigned char const* value);
 
