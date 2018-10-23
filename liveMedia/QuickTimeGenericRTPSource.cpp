@@ -14,11 +14,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
-<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
-=======
-// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
->>>>>>> master
 // RTP Sources containing generic QuickTime stream data, as defined in
 //     <http://developer.apple.com/quicktime/icefloe/dispatch026.html>
 // Implementation
