@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -54,7 +54,6 @@
     <ClCompile Include="..\liveMedia\ByteStreamFileSource.cpp" />
     <ClCompile Include="..\liveMedia\ByteStreamMemoryBufferSource.cpp" />
     <ClCompile Include="..\liveMedia\ByteStreamMultiFileSource.cpp" />
-    <ClCompile Include="..\liveMedia\DarwinInjector.cpp" />
     <ClCompile Include="..\liveMedia\DeviceSource.cpp" />
     <ClCompile Include="..\liveMedia\DigestAuthentication.cpp" />
     <ClCompile Include="..\liveMedia\DVVideoFileServerMediaSubsession.cpp" />
@@ -67,6 +66,7 @@
     <ClCompile Include="..\liveMedia\FramedFileSource.cpp" />
     <ClCompile Include="..\liveMedia\FramedFilter.cpp" />
     <ClCompile Include="..\liveMedia\FramedSource.cpp" />
+    <ClCompile Include="..\liveMedia\GenericMediaServer.cpp" />
     <ClCompile Include="..\liveMedia\GSMAudioRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\H261VideoRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\H263plusVideoFileServerMediaSubsession.cpp" />
@@ -166,6 +166,8 @@
     <ClCompile Include="..\liveMedia\QCELPAudioRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\QuickTimeFileSink.cpp" />
     <ClCompile Include="..\liveMedia\QuickTimeGenericRTPSource.cpp" />
+    <ClCompile Include="..\liveMedia\RawVideoRTPSink.cpp" />
+    <ClCompile Include="..\liveMedia\RawVideoRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\RTCP.cpp" />
     <ClCompile Include="..\liveMedia\rtcp_from_spec.c" />
     <ClCompile Include="..\liveMedia\RTPInterface.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="..\liveMedia\RTSPCommon.cpp" />
     <ClCompile Include="..\liveMedia\RTSPRegisterSender.cpp" />
     <ClCompile Include="..\liveMedia\RTSPServer.cpp" />
+    <ClCompile Include="..\liveMedia\RTSPServerRegister.cpp" />
     <ClCompile Include="..\liveMedia\RTSPServerSupportingHTTPStreaming.cpp" />
     <ClCompile Include="..\liveMedia\ServerMediaSession.cpp" />
     <ClCompile Include="..\liveMedia\SimpleRTPSink.cpp" />
@@ -396,31 +399,34 @@
     <ProjectGuid>{833D11CA-B0EB-4792-A0CF-FF863C71373A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>live555</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

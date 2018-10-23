@@ -84,9 +84,6 @@
     <ClCompile Include="..\liveMedia\ByteStreamMultiFileSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\liveMedia\DarwinInjector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\liveMedia\DeviceSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -559,6 +556,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\BasicUsageEnvironment\DelayQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\GenericMediaServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\RawVideoRTPSink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\RawVideoRTPSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\RTSPServerRegister.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
