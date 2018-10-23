@@ -14,7 +14,11 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
+<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
+=======
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
+>>>>>>> master
 // A filter that passes through (unchanged) chunks that contain an integral number
 // of MPEG-2 Transport Stream packets, but returning (in "fDurationInMicroseconds")
 // an updated estimate of the time gap between chunks.

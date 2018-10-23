@@ -20,13 +20,15 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _HANDLER_SET_HH
 #define _HANDLER_SET_HH
 
+#include "Platform.h"
+
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
 #endif
 
 ////////// HandlerSet (etc.) definition //////////
 
-class HandlerDescriptor {
+class LIVE555_API HandlerDescriptor {
   HandlerDescriptor(HandlerDescriptor* nextHandler);
   virtual ~HandlerDescriptor();
 
@@ -44,7 +46,7 @@ private:
   HandlerDescriptor* fPrevHandler;
 };
 
-class HandlerSet {
+class LIVE555_API HandlerSet {
 public:
   HandlerSet();
   virtual ~HandlerSet();

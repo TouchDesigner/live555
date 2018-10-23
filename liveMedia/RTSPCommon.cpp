@@ -14,7 +14,11 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
+<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
+=======
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
+>>>>>>> master
 // Common routines used by both RTSP clients and servers
 // Implementation
 
@@ -131,6 +135,7 @@ Boolean parseRTSPRequestString(char const* reqStr,
         while (k2 <= k) resultURLSuffix[n++] = reqStr[k2++];
       }
       resultURLSuffix[n] = '\0';
+      decodeURL(resultURLSuffix);
 
       // The URL 'pre-suffix' comes from [i+1,k1-1]
       // Copy "resultURLPreSuffix":

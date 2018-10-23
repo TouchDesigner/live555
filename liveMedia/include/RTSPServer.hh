@@ -23,12 +23,19 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #ifndef _GENERIC_MEDIA_SERVER_HH
 #include "GenericMediaServer.hh"
+#include "Platform.h"
+
+#ifndef _SERVER_MEDIA_SESSION_HH
+#include "ServerMediaSession.hh"
+#endif
+#ifndef _NET_ADDRESS_HH
+#include <NetAddress.hh>
 #endif
 #ifndef _DIGEST_AUTHENTICATION_HH
 #include "DigestAuthentication.hh"
 #endif
 
-class RTSPServer: public GenericMediaServer {
+class LIVE555_API RTSPServer: public GenericMediaServer {
 public:
   static RTSPServer* createNew(UsageEnvironment& env, Port ourPort = 554,
 			       UserAuthenticationDatabase* authDatabase = NULL,
@@ -217,7 +224,7 @@ public: // should be protected, but some old compilers complain otherwise
   };
 
   // The state of an individual client session (using one or more sequential TCP connections) handled by a RTSP server:
-  class RTSPClientSession: public GenericMediaServer::ClientSession {
+  class LIVE555_API RTSPClientSession: public GenericMediaServer::ClientSession {
   protected:
     RTSPClientSession(RTSPServer& ourServer, u_int32_t sessionId);
     virtual ~RTSPClientSession();
@@ -303,7 +310,7 @@ private:
 
 ////////// A subclass of "RTSPServer" that implements the "REGISTER" command to set up proxying on the specified URL //////////
 
-class RTSPServerWithREGISTERProxying: public RTSPServer {
+class LIVE555_API RTSPServerWithREGISTERProxying: public RTSPServer {
 public:
   static RTSPServerWithREGISTERProxying* createNew(UsageEnvironment& env, Port ourPort = 554,
 						   UserAuthenticationDatabase* authDatabase = NULL,

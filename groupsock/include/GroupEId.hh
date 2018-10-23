@@ -14,12 +14,18 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "multikit" Multicast Application Shell
+<<<<<<< HEAD
 // Copyright (c) 1996-2018, Live Networks, Inc.  All rights reserved
+=======
+// Copyright (c) 1996-2015, Live Networks, Inc.  All rights reserved
+>>>>>>> master
 // "Group Endpoint Id"
 // C++ header
 
 #ifndef _GROUPEID_HH
 #define _GROUPEID_HH
+
+#include "Platform.h"
 
 #ifndef _BOOLEAN_HH
 #include "Boolean.hh"
@@ -29,7 +35,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "NetAddress.hh"
 #endif
 
-class GroupEId {
+class LIVE555_API GroupEId {
 public:
   GroupEId(struct in_addr const& groupAddr,
 	   portNumBits portNum, u_int8_t ttl);

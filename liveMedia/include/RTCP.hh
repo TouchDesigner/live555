@@ -45,7 +45,7 @@ typedef void RTCPAppHandlerFunc(void* clientData,
 
 class RTCPMemberDatabase; // forward
 
-class RTCPInstance: public Medium {
+class LIVE555_API RTCPInstance: public Medium {
 public:
   static RTCPInstance* createNew(UsageEnvironment& env, Groupsock* RTCPgs,
 				 unsigned totSessionBW, /* in kbps */

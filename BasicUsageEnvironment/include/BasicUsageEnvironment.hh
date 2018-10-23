@@ -20,11 +20,13 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _BASIC_USAGE_ENVIRONMENT_HH
 #define _BASIC_USAGE_ENVIRONMENT_HH
 
+#include "Platform.h"
+
 #ifndef _BASIC_USAGE_ENVIRONMENT0_HH
 #include "BasicUsageEnvironment0.hh"
 #endif
 
-class BasicUsageEnvironment: public BasicUsageEnvironment0 {
+class LIVE555_API BasicUsageEnvironment : public BasicUsageEnvironment0 {
 public:
   static BasicUsageEnvironment* createNew(TaskScheduler& taskScheduler);
 
@@ -44,7 +46,7 @@ protected:
 };
 
 
-class BasicTaskScheduler: public BasicTaskScheduler0 {
+class LIVE555_API BasicTaskScheduler : public BasicTaskScheduler0 {
 public:
   static BasicTaskScheduler* createNew(unsigned maxSchedulerGranularity = 10000/*microseconds*/);
     // "maxSchedulerGranularity" (default value: 10 ms) specifies the maximum time that we wait (in "select()") before

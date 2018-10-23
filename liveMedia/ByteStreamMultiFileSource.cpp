@@ -14,9 +14,14 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
+<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // A source that consists of multiple byte-stream files, read sequentially.
 // (The input is an array of file names, with a terminating 'file name' of NULL.) 
+=======
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
+// A source that consists of multiple byte-stream files, read sequentially
+>>>>>>> master
 // Implementation
 
 #include "ByteStreamMultiFileSource.hh"

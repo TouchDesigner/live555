@@ -21,6 +21,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MEDIA_HH
 #define _MEDIA_HH
 
+#include "Platform.h"
+
 #ifndef _LIVEMEDIA_VERSION_HH
 #include "liveMedia_version.hh"
 #endif
@@ -47,7 +49,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define mediumNameMaxLen 30
 
-class Medium {
+class LIVE555_API Medium {
 public:
   static Boolean lookupByName(UsageEnvironment& env,
 			      char const* mediumName,
@@ -88,7 +90,7 @@ private:
 // A data structure for looking up a Medium by its string name.
 // (It is used only to implement "Medium", but we make it visible here, in case developers want to use it to iterate over
 //  the whole set of "Medium" objects that we've created.)
-class MediaLookupTable {
+class LIVE555_API MediaLookupTable {
 public:
   static MediaLookupTable* ourMedia(UsageEnvironment& env);
   HashTable const& getTable() { return *fTable; }
@@ -116,7 +118,7 @@ private:
 
 
 // The structure pointed to by the "liveMediaPriv" UsageEnvironment field:
-class _Tables {
+class LIVE555_API _Tables {
 public:
   static _Tables* getOurTables(UsageEnvironment& env, Boolean createIfNotPresent = True);
       // returns a pointer to a "_Tables" structure (creating it if necessary)

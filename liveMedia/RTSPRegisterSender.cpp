@@ -14,9 +14,14 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
+<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
 // Special objects which, when created, sends a custom RTSP "REGISTER" (or "DEREGISTER") command
 // to a specified client.
+=======
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
+// A special object which, when created, sends a custom RTSP "REGISTER" command to a specified client.
+>>>>>>> master
 // Implementation
 
 #include "RTSPRegisterSender.hh"

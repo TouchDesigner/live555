@@ -14,7 +14,11 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 **********/
 // "liveMedia"
+<<<<<<< HEAD
 // Copyright (c) 1996-2018 Live Networks, Inc.  All rights reserved.
+=======
+// Copyright (c) 1996-2015 Live Networks, Inc.  All rights reserved.
+>>>>>>> master
 // A class encapsulating the state of a MP3 stream
 // C++ header
 
@@ -38,7 +42,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define XING_TOC_LENGTH 100
 
-class MP3StreamState {
+class LIVE555_API MP3StreamState {
 public:
   MP3StreamState(UsageEnvironment& env);
   virtual ~MP3StreamState();
@@ -62,7 +66,8 @@ public:
   void checkForXingHeader(); // hack for Xing VBR files
 
 protected: // private->protected requested by Pierre l'Hussiez
-  unsigned readFromStream(unsigned char* buf, unsigned numChars);
+  // Made virtual by Malcolm Bechard
+  virtual unsigned readFromStream(unsigned char* buf, unsigned numChars);
 
 private:
   MP3FrameParams& fr() {return fCurrentFrame;}
